@@ -297,7 +297,7 @@ print(kter_A.ho_va_ten())
 >Tran-Linh@example.com
 >Tran Linh
 
-- You want to change the the values of "ho" and "ten", th result in as belows:
+- You want to change the the values of "ho" and "ten", the result in as belows:
 ```
 # Initialize an object from KTer
 kter_A = KTer("Tran", "Linh")
@@ -347,7 +347,7 @@ print(kter_A.ten)
 print(kter_A.email())
 print(kter_A.ho_va_ten())
 ```
-It still method instead attribute as you want it to be. Need add @property keyword to get around. this time you ``print(kter_A.email)`` instead of ``print(kter_A.email())``
+It's still method instead attribute as you want it to be. Need add @property keyword to get around. this time you ``print(kter_A.email)`` instead of ``print(kter_A.email())``
 ```
 #!/usr/bin/env python3.8
 
@@ -380,11 +380,106 @@ print(kter_A.email)
 print(kter_A.ho_va_ten())
 ```
 
+And now you're already done for it. so, you want to have attribute from method it would place getters play in.
+
 ## Setters
 
+You set value for method ho_va_ten as bellows:
+
+```
+#!/usr/bin/env python3.8
+
+class KTer:
+    def __init__(self, para_ho, para_ten):
+        self.ho = para_ho
+        self.ten = para_ten
+    
+    @property
+    def email(self):
+        return self.ho + "-" + self.ten + "@example.com"
+    
+    @property
+    def ho_va_ten(self):
+        return "{}{}".format(self.ho, self.ten)
+    
+#Initialize an object from KTer class
+kter_A = KTer("Tran", "Giau")
+
+kter_A.ho_va_ten = "Nguyen Linh"
+
+print(kter_A.email)
+print(kter_A.ho_va_ten)
+```
+it will casue a error, since ho_va_ten this time is ho_va_ten is method natural. so get rid just add setter in here.
+```
+#!/usr/bin/env python3.8
+
+class KTer:
+    def __init__(self, para_ho, para_ten):
+        self.ho = para_ho
+        self.ten = para_ten
+    
+    @property
+    def email(self):
+        return self.ho + "-" + self.ten + "@example.com"
+    
+    @property
+    def ho_va_ten(self):
+        return "{}{}".format(self.ho, self.ten)
+    
+    @ho_va_ten.setter
+    def ho_va_ten(self, tenmoi):
+        ho_moi, ten_moi = tenmoi.split(' ')
+        self.ho = ho_moi
+        self.ten = ten_moi
+    
+#Initialize an object from KTer class
+kter_A = KTer("Tran", "Giau")
+
+kter_A.ho_va_ten = "Nguyen Linh"
+
+print(kter_A.email)
+print(kter_A.ho_va_ten)
+```
+
 ## Deleters
+If you want to delete after use, it is time for deleters come in. You could assign 0, none value for which you want to delete
+```
+#!/usr/in/env python3.9
+
+class KTer:
+    def __init__(self, para_ho, para_ten):
+        self.ho = para_ho
+        self.ten = para_ten
+
+    @property
+    def email(self):
+        return self.ho + '-' + self.ten + '@example.com'
+    
+    @property
+    def ho_va_ten(self):
+        return '{}{}'.format(self.ho, self.ten)
+    
+    @ho_va_ten.setter
+    def ho_va_ten(self, tenmoi):
+        ten_moi, ho_moi = tenmoi.split(' ')
+        self.ten = ten_moi
+        self.ho = ho_moi
+
+    @ho_va_ten.deleter
+    def ho_va_ten(self):
+        self.ho = None
+        self.ten = None
+        print("da xoa")
+    
+kter_A = KTer("tran", "long")
+
+kter_A.ho_va_ten = "Nguyen Kinh"
+
+print(kter_A.ho_va_ten)
+del kter_A.ho_va_ten
+print(kter_A.ho)
+print(kter_A.ten)
+```
 
 
-# reading
-
-https://howkteam.vn/course/lap-trinh-huong-doi-tuong-voi-python/setters-getters-va-deleters-trong-lap-trinh-huong-doi-tuong-python-3886
